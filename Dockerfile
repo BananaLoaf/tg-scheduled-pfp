@@ -9,9 +9,8 @@ RUN pip install --no-cache-dir poetry
 # Install python app globaly
 COPY pyproject.toml poetry.lock run.sh README.md ./
 COPY tg_scheduled_pfp/ ./tg_scheduled_pfp
+ENV POETRY_VIRTUALENVS_CREATE=false
 RUN poetry install
-RUN poetry build
-RUN pip install --no-cache-dir dist/tg_scheduled_pfp-0.0.0-py3-none-any.whl
 
 # Env
 ENV API_HASH=XXXX
