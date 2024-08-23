@@ -17,5 +17,8 @@ ENV API_HASH=XXXX
 ENV API_ID=XXXX
 ENV PYTHONUNBUFFERED=1
 
+HEALTHCHECK --interval=1m --timeout=5s \
+  CMD tg-scheduled-pfp auth
+
 COPY schedule.sh ./
 CMD ["sh", "run.sh"]

@@ -1,6 +1,7 @@
 import hashlib
 import tempfile
 from pathlib import Path
+from typing import Optional
 
 import typer
 from telethon import functions
@@ -15,20 +16,21 @@ class PFPScheduler:
         self,
         api_id: int,
         api_hash: str,
+        request_retries: Optional[int] = None,
+        connection_retries: Optional[int] = None,
     ):
         self.client = TelegramClient(
             session=Path(__file__).parent.joinpath('session'),
             api_id=api_id,
             api_hash=api_hash,
-            request_retries=None,
-            connection_retries=None,
+            request_retries=request_retries,
+            connection_retries=connection_retries,
         )
         self.client.start()
 
         self._photos = {}
-        self._compile_profile_pictures()
 
-    def _compile_profile_pictures(self):
+    def load_profile_pictures(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             for photo in self.client.get_profile_photos(self.client.get_me()):
                 photo_path = self.client.download_media(photo, temp_dir)
@@ -47,6 +49,7 @@ class PFPScheduler:
             api_id=api_id,
             api_hash=api_hash,
         )
+        self.load_profile_pictures()
         self._list_profile_pictures()
 
     def _list_profile_pictures(self):
@@ -66,8 +69,22 @@ class PFPScheduler:
             api_id=api_id,
             api_hash=api_hash,
         )
+        self.load_profile_pictures()
         self._set_profile_picture(md5)
         print(f'Profile picture set!')
+
+    @classmethod
+    def auth(
+        cls,
+        api_id: int = api_id_opt,
+        api_hash: str = api_hash_opt,
+    ):
+        cls(
+            api_id=api_id,
+            api_hash=api_hash,
+            connection_retries=1,
+        )
+        print('Success!')
 
     def _set_profile_picture(self, md5: str):
         photo = self._photos[md5]
@@ -78,6 +95,7 @@ def main():
     app = typer.Typer()
     app.command()(PFPScheduler.list_profile_pictures)
     app.command()(PFPScheduler.set_profile_picture)
+    app.command()(PFPScheduler.auth)
     app()
 
 
