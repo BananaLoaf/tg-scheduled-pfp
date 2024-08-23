@@ -13,8 +13,11 @@ poetry install
 
 ### 3. Authorize and list current PFPs
 
+Use Telegram App credentials obtained earlier
 ```bash
-poetry run list-profile-pictures
+API_HASH=XXXX
+API_ID=XXXX
+poetry run tg-scheduled-pfp list-profile-pictures --api-hash $API_HASH --api-id $API_ID
 ```
 
 Pictures will be listed from newest to oldest
