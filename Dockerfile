@@ -12,13 +12,9 @@ COPY tg_scheduled_pfp/ ./tg_scheduled_pfp
 ENV POETRY_VIRTUALENVS_CREATE=false
 RUN poetry install
 
-# Env
-ENV API_HASH=XXXX
-ENV API_ID=XXXX
-ENV PYTHONUNBUFFERED=1
-
 HEALTHCHECK --interval=1m --timeout=5s \
   CMD tg-scheduled-pfp auth
 
 COPY schedule.sh ./
+ENV PYTHONUNBUFFERED=1
 CMD ["sh", "run.sh"]

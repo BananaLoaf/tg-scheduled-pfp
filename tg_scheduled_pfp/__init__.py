@@ -4,8 +4,12 @@ from pathlib import Path
 from typing import Optional
 
 import typer
+from dotenv import load_dotenv
 from telethon import functions
 from telethon.sync import TelegramClient
+
+
+load_dotenv()
 
 
 class PFPScheduler:
