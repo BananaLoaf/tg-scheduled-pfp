@@ -2,10 +2,16 @@
 
 Dockerized app for cron scheduled telegram profile pictures.
 
-Before you begin, you need to obtain telegram app credentials. More info [here](https://core.telegram.org/api/obtaining_api_id).
-Fill in `API_HASH` and `API_ID` env variables in `.env` file with your Telegram App credentials.
+### 0. Prepare credentials
+
+1. Go [here](https://core.telegram.org/api/obtaining_api_id) and do what you need to do
+
+2. Copy `.env.template` as `.env`
+
+3. Fill in `API_HASH` and `API_ID` env variables in `.env` file with your Telegram App credentials.
 
 ### 1. Clone this repo
+
 ### 2. Install
 
 ```bash
@@ -20,7 +26,9 @@ poetry run tg-scheduled-pfp list-profile-pictures
 
 Pictures will be listed from newest to oldest
 
-### 4. Edit schedule.sh
+### 4. Prepare schedule
+
+Copy `schedule.sh.template` as `schedule.sh` and edit it how you want.
 
 Use md5 hashes you obtained while listing current pfps to craft a schedule.
 
