@@ -1,16 +1,12 @@
-version: '3.8'
-
 services:
   tg_scheduled_pfp:
-    env_file: .env
     build:
       context: .
       dockerfile: Dockerfile
+    pull_policy: build
     container_name: tg_scheduled_pfp
+    environment:
+      - API_HASH
+      - API_ID
     restart: unless-stopped
-    networks:
-      - tg_scheduled_pfp
-
-networks:
-  tg_scheduled_pfp:
-    driver: bridge
+    network_mode: bridge
