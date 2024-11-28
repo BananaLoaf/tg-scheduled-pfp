@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Deps
 RUN apk add --no-cache gcc musl-dev libffi-dev
-RUN pip install --no-cache-dir poetry
+RUN pip install --no-cache-dir poetry==1.3.2
 
 # Install python app globaly
 COPY pyproject.toml poetry.lock README.md ./
